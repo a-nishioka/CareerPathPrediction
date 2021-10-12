@@ -1,3 +1,5 @@
 from scrape import scrape_site
+from parse import parse_html_text
 
-scrape_site("https://paiza.jp/career/job_offers")
+html = scrape_site("https://paiza.jp/career/job_offers")
+soup = parse_html_text(html.text)
