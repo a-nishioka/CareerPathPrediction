@@ -1,4 +1,4 @@
 import requests
 
-def get_request(url):
+def get_http_request(url):
     return requests.get(url)
