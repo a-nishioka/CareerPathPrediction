@@ -10,6 +10,10 @@ class Parser:
         self.offer_id_list = []
         self.company_name_list = []
 
+    def __del__(self):
+        del self.offer_id_list
+        del self.company_name_list
+
     def parse(self, html_text):
         soup = Soup.Soup()
         text = soup.markup(html_text)
