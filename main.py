@@ -1,6 +1,6 @@
 import Crawler
 import Parser
-import DB
+import Data
 
 crawler = Crawler.Crawler()
 html = crawler.crawl("https://paiza.jp/career/job_offers")
@@ -11,10 +11,7 @@ print(html.text)
 parser = Parser.Parser()
 parser.parse(html.text)
 
-db = DB.DB()
-db.open()
+data = Data.Data()
 
-db.close()
-
-
+del data
 del parser

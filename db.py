@@ -5,7 +5,7 @@ class DB:
     connection = pymysql.Connection
 
     def open(self):
-        # データベースに接続します。
+        print("DB.open")
         self.connection = pymysql.connect(
             host='localhost',
             user='user1',
@@ -14,4 +14,5 @@ class DB:
             charset='utf8')
 
     def close(self):
+        print("DB.close")
         self.connection.close()
