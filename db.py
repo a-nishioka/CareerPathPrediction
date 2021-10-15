@@ -1,12 +1,17 @@
 import pymysql
 
-def db_connect():
-    # データベースに接続します。
-    connection = pymysql.connect(
-        host='localhost',
-        user='user1',
-        passwd='user1',
-        db='job_list',
-        charset='utf8')
 
-    connection.close()
+class DB:
+    connection = pymysql.Connection
+
+    def open(self):
+        # データベースに接続します。
+        self.connection = pymysql.connect(
+            host='localhost',
+            user='user1',
+            passwd='user1',
+            db='job_list',
+            charset='utf8')
+
+    def close(self):
+        self.connection.close()

@@ -1,12 +1,17 @@
-from scrape import scrape_site
-from parse import parse_html_text
-from db import db_connect
+import Crawler
+import Parser
+import DB
 
-html = scrape_site("https://paiza.jp/career/job_offers")
+crawler = Crawler.Crawler()
+html = crawler.crawl("https://paiza.jp/career/job_offers")
 
 # 分析用コード
 print(html.text)
 
-parse_html_text(html.text)
+parser = Parser.Parser()
+parser.parse(html.text)
 
-db_connect()
+db = DB.DB()
+db.open()
+
+db.close()
