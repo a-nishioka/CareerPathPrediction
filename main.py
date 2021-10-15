@@ -15,3 +15,6 @@ db = DB.DB()
 db.open()
 
 db.close()
+
+
+del parser
