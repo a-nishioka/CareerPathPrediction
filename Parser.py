@@ -30,7 +30,7 @@ class Parser:
             so = StringOperation.StringOperation()
             back = so.get_back("=", href)
             id = so.get_forward("#", back)
-            self.offer_id_list = id
+            self.offer_id_list.append(id)
             print(id)
 
     def get_offer_id_list(self):
@@ -39,7 +39,7 @@ class Parser:
     def get_company_name(self, soup):
         for each in soup.find_all("h4", class_="c-job_offer-recruiter__name"):
             company_name = each.find("a").text
-            self.company_name_list = company_name
+            self.company_name_list.append(company_name)
             print(company_name)
 
     def get_company_name_list(self):

@@ -12,6 +12,8 @@ parser = Parser.Parser()
 parser.parse(html.text)
 
 data = Data.Data()
+data.truncate_company_name(parser.get_offer_id_list(), parser.get_company_name_list())
+data.insert_company_name(parser.get_offer_id_list(), parser.get_company_name_list())
 
 del data
 del parser
