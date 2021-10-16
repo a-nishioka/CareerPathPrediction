@@ -17,8 +17,8 @@ class DB:
         print("DB.close")
         self.connection.close()
 
-    def insert(self, table_name, col_name1, col_name2, list1, list2):
-        sql = "INSERT INTO " + table_name + " (" + col_name1 + ", " + col_name2 + ") VALUES (%s, %s)"
+    def insert(self, table_name, col_name, list1, list2):
+        sql = "INSERT INTO " + table_name + " ( offer_id, " + col_name + ") VALUES (%s, %s)"
         with self.connection.cursor() as cursor:
             for item1, item2 in zip(list1, list2):
                 r = cursor.execute(sql, (item1, item2))
@@ -29,5 +29,3 @@ class DB:
         with self.connection.cursor() as cursor:
             cursor.execute(sql)
             self.connection.commit()
-                
-

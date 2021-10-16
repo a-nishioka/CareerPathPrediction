@@ -1,28 +1,37 @@
 import Soup
 import StringOperation
-
+from statistics import median
 
 class Parser:
     soup = Soup.Soup()
+    so = StringOperation.StringOperation()
     offer_id_list = []
     company_name_list = []
+    salary_min_list = []
+    salary_max_list = []
 
     def __init__(self):
         self.soup = Soup.Soup()
+        self.so = StringOperation.StringOperation()
         self.offer_id_list = []
         self.company_name_list = []
+        self.salary_min_list = []
+        self.salary_max_list = []        
 
     def __del__(self):
         del self.soup
+        del self.so
         del self.offer_id_list
         del self.company_name_list
+        del self.salary_min_list
+        del self.salary_max_list        
 
     def parse(self, html_text):
         text = self.soup.markup(html_text)
         self.get_offer_id(text)
         self.get_company_name(text)
-        # for each in soup.find_all("a"):
-        # print(each.text)
+        self.get_salary_min(text)
+        self.get_salary_max(text)
         return
 
     def next(self, html_text):
@@ -38,9 +47,8 @@ class Parser:
         self.offer_id_list = []
         for each in text.find_all("h4", class_="c-job_offer-recruiter__name"):
             href = each.find("a").get("href")
-            so = StringOperation.StringOperation()
-            back = so.get_back("=", href)
-            id = so.get_forward("#", back)
+            forward = self.so.get_forward("=", href)
+            id = self.so.get_back("#", forward).strip()
             self.offer_id_list.append(id)
             print(id)
 
@@ -49,9 +57,41 @@ class Parser:
 
     def get_company_name(self, text):
         for each in text.find_all("h4", class_="c-job_offer-recruiter__name"):
-            company_name = each.find("a").text
+            company_name = each.find("a").text.strip()
             self.company_name_list.append(company_name)
             print(company_name)
 
     def get_company_name_list(self):
         return self.company_name_list
+
+    def get_salary_min(self, text):
+        for each in text.find_all("strong", class_="c-job_offer-detail__salary"):
+            min = ""
+            min = self.so.get_back("万 〜", each.text)
+            if(min == ""):
+                min = self.so.get_back("万円 〜", each.text)
+            if(min == ""):
+                min = self.so.get_back("万円", each.text)
+            if(min == ""):
+                min = "425"                
+            min = self.so.replace(",", "", str(min)).strip()
+            self.salary_min_list.append(int(min))
+            print(min)
+
+    def get_salary_min_list(self):
+        return self.salary_min_list
+
+    def get_salary_max(self, text):
+        for each in text.find_all("strong", class_="c-job_offer-detail__salary"): 
+            max = ""
+            forward = self.so.get_forward("〜 ", each.text)
+            if(forward != ""):
+                max = self.so.get_back("万円", forward)
+            if (max == ""):
+                max = "556"
+            max = self.so.replace(",", "", str(max)).strip()
+            self.salary_max_list.append(int(max))
+            print(max)
+
+    def get_salary_max_list(self):
+        return self.salary_max_list
