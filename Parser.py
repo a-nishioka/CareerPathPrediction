@@ -1,13 +1,16 @@
 import Soup
 import StringOperation
+import Token
 from statistics import median
 
 class Parser:
     soup = Soup.Soup()
     parse_tree = ""
     so = StringOperation.StringOperation()
+    token = Token.Token()
     offer_id_list = []
     company_name_list = []
+    occupation_list = []
     salary_min_list = []
     salary_max_list = []
 
@@ -15,8 +18,10 @@ class Parser:
         self.soup = Soup.Soup()
         self.parse_tree =""
         self.so = StringOperation.StringOperation()
+        self.token = Token.Token()
         self.offer_id_list = []
         self.company_name_list = []
+        self.occupation_list = []
         self.salary_min_list = []
         self.salary_max_list = []        
 
@@ -24,8 +29,10 @@ class Parser:
         del self.soup
         del self.parse_tree
         del self.so
+        del self.token
         del self.offer_id_list
         del self.company_name_list
+        del self.occupation_list
         del self.salary_min_list
         del self.salary_max_list        
 
@@ -33,6 +40,7 @@ class Parser:
         self.parse_tree = self.soup.markup(html_text)
         self.get_offer_id()
         self.get_company_name()
+        self.get_occupation()
         self.get_salary_min()
         self.get_salary_max()
         return
@@ -51,7 +59,6 @@ class Parser:
             forward = self.so.get_forward("=", href)
             id = self.so.get_back("#", forward).strip()
             self.offer_id_list.append(id)
-            print(id)
 
     def get_offer_id_list(self):
         return self.offer_id_list
@@ -60,10 +67,20 @@ class Parser:
         for each in self.parse_tree.find_all("h4", class_="c-job_offer-recruiter__name"):
             company_name = each.find("a").text.strip()
             self.company_name_list.append(company_name)
-            print(company_name)
 
     def get_company_name_list(self):
         return self.company_name_list
+
+    def get_occupation(self):
+        for each in self.parse_tree.find_all("div", class_="c-job_offer-detail__occupation"):
+            occupation = each.text.strip()
+            self.occupation_list.append(occupation)
+            part_of_speech_list = ["名詞"]
+            result = self.token.get_part_of_speech(part_of_speech_list, occupation)
+            print(result)
+
+    def get_occupation_list(self):
+        return self.occupation_list
 
     def get_salary_min(self):
         for each in self.parse_tree.find_all("strong", class_="c-job_offer-detail__salary"):
@@ -77,7 +94,6 @@ class Parser:
                 min = "425"                
             min = self.so.replace(",", "", str(min)).strip()
             self.salary_min_list.append(int(min))
-            print(min)
 
     def get_salary_min_list(self):
         return self.salary_min_list
@@ -92,7 +108,6 @@ class Parser:
                 max = "556"
             max = self.so.replace(",", "", str(max)).strip()
             self.salary_max_list.append(int(max))
-            print(max)
 
     def get_salary_max_list(self):
         return self.salary_max_list
