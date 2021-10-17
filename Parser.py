@@ -4,6 +4,7 @@ from statistics import median
 
 class Parser:
     soup = Soup.Soup()
+    parse_tree = ""
     so = StringOperation.StringOperation()
     offer_id_list = []
     company_name_list = []
@@ -12,6 +13,7 @@ class Parser:
 
     def __init__(self):
         self.soup = Soup.Soup()
+        self.parse_tree =""
         self.so = StringOperation.StringOperation()
         self.offer_id_list = []
         self.company_name_list = []
@@ -20,6 +22,7 @@ class Parser:
 
     def __del__(self):
         del self.soup
+        del self.parse_tree
         del self.so
         del self.offer_id_list
         del self.company_name_list
@@ -27,25 +30,23 @@ class Parser:
         del self.salary_max_list        
 
     def parse(self, html_text):
-        text = self.soup.markup(html_text)
-        self.get_offer_id(text)
-        self.get_company_name(text)
-        self.get_salary_min(text)
-        self.get_salary_max(text)
+        self.parse_tree = self.soup.markup(html_text)
+        self.get_offer_id()
+        self.get_company_name()
+        self.get_salary_min()
+        self.get_salary_max()
         return
 
-    def next(self, html_text):
-        text = self.soup.markup(html_text)
-        tag = ""
-        tag = text.find("a", {"rel":'next'})
-        if tag != "":
+    def next(self):
+        tag = self.parse_tree.find("a", {"rel":'next'})
+        if(tag != None):
             return tag.get("href")
         else:
             return ""
 
-    def get_offer_id(self, text):
+    def get_offer_id(self):
         self.offer_id_list = []
-        for each in text.find_all("h4", class_="c-job_offer-recruiter__name"):
+        for each in self.parse_tree.find_all("h4", class_="c-job_offer-recruiter__name"):
             href = each.find("a").get("href")
             forward = self.so.get_forward("=", href)
             id = self.so.get_back("#", forward).strip()
@@ -55,8 +56,8 @@ class Parser:
     def get_offer_id_list(self):
         return self.offer_id_list
 
-    def get_company_name(self, text):
-        for each in text.find_all("h4", class_="c-job_offer-recruiter__name"):
+    def get_company_name(self):
+        for each in self.parse_tree.find_all("h4", class_="c-job_offer-recruiter__name"):
             company_name = each.find("a").text.strip()
             self.company_name_list.append(company_name)
             print(company_name)
@@ -64,8 +65,8 @@ class Parser:
     def get_company_name_list(self):
         return self.company_name_list
 
-    def get_salary_min(self, text):
-        for each in text.find_all("strong", class_="c-job_offer-detail__salary"):
+    def get_salary_min(self):
+        for each in self.parse_tree.find_all("strong", class_="c-job_offer-detail__salary"):
             min = ""
             min = self.so.get_back("万 〜", each.text)
             if(min == ""):
@@ -81,8 +82,8 @@ class Parser:
     def get_salary_min_list(self):
         return self.salary_min_list
 
-    def get_salary_max(self, text):
-        for each in text.find_all("strong", class_="c-job_offer-detail__salary"): 
+    def get_salary_max(self):
+        for each in self.parse_tree.find_all("strong", class_="c-job_offer-detail__salary"): 
             max = ""
             forward = self.so.get_forward("〜 ", each.text)
             if(forward != ""):

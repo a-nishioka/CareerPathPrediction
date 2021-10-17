@@ -15,7 +15,7 @@ html = crawler.crawl("https://paiza.jp/career/job_offers")
 while True:
     parser.parse(html.text)
     data.insert(parser)
-    next_page = parser.next(html.text)
+    next_page = parser.next()
     if next_page != "":
         time.sleep(3)
         html = crawler.crawl(base_url + next_page)
