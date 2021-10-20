@@ -75,12 +75,14 @@ class Parser:
         for each in self.parse_tree.find_all("div", class_="c-job_offer-detail__occupation"):
             occupation = each.text.strip()
             print(occupation)
-            self.occupation_list.append(occupation)
             part_of_speech_list = ["名詞"]
             pos_occupation = self.token.get_part_of_speech(part_of_speech_list, occupation)
             print(pos_occupation)
-            cleaned_occupation = self.so.remove_punctuation(''.join(pos_occupation))
-            print(cleaned_occupation)
+            removed_punctuation = self.so.remove_punctuation(''.join(pos_occupation))
+            removed_prefecture = self.so.remove_prefecture(removed_punctuation)
+            removed_region = self.so.remove_region(removed_prefecture)
+            print(removed_region)
+            self.occupation_list.append(removed_region)
 
     def get_occupation_list(self):
         return self.occupation_list
