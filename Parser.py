@@ -36,7 +36,7 @@ class Parser:
         del self.salary_min_list
         del self.salary_max_list        
 
-    def parse(self, html_text):
+    def parse(self, html_text): 
         self.parse_tree = self.soup.markup(html_text)
         self.get_offer_id()
         self.get_company_name()
@@ -78,11 +78,15 @@ class Parser:
             part_of_speech_list = ["名詞"]
             pos_occupation = self.token.get_part_of_speech(part_of_speech_list, occupation)
             print(pos_occupation)
-            removed_punctuation = self.so.remove_punctuation(''.join(pos_occupation))
-            removed_prefecture = self.so.remove_prefecture(removed_punctuation)
-            removed_region = self.so.remove_region(removed_prefecture)
-            print(removed_region)
-            self.occupation_list.append(removed_region)
+            reunion = []
+            for each in pos_occupation:
+                removed_punctuation = self.so.remove_punctuation(each)
+                removed_prefecture = self.so.remove_prefecture(removed_punctuation)
+                removed_region = self.so.remove_region(removed_prefecture)
+                removed_city = self.so.remove_city(removed_region)
+                reunion.append(removed_city)
+            self.occupation_list.append(''.join(reunion))
+            print(''.join(reunion))
 
     def get_occupation_list(self):
         return self.occupation_list
