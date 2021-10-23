@@ -13,6 +13,7 @@ class Parser:
     occupation_list = []
     salary_min_list = []
     salary_max_list = []
+    location_list = []
 
     def __init__(self):
         self.soup = Soup.Soup()
@@ -23,7 +24,8 @@ class Parser:
         self.company_name_list = []
         self.occupation_list = []
         self.salary_min_list = []
-        self.salary_max_list = []        
+        self.salary_max_list = []    
+        self.location_list = []
 
     def __del__(self):
         del self.soup
@@ -34,7 +36,8 @@ class Parser:
         del self.company_name_list
         del self.occupation_list
         del self.salary_min_list
-        del self.salary_max_list        
+        del self.salary_max_list
+        del self.location_list
 
     def parse(self, html_text): 
         self.parse_tree = self.soup.markup(html_text)
@@ -43,6 +46,7 @@ class Parser:
         self.get_occupation()
         self.get_salary_min()
         self.get_salary_max()
+        self.get_location()
         return
 
     def next(self):
@@ -74,7 +78,6 @@ class Parser:
     def get_occupation(self):
         for each in self.parse_tree.find_all("div", class_="c-job_offer-detail__occupation"):
             occupation = each.text.strip()
-            print(occupation)
             part_of_speech_list = ["名詞"]
             pos_occupation = self.token.get_part_of_speech(part_of_speech_list, occupation)
             print(pos_occupation)
@@ -100,7 +103,7 @@ class Parser:
             if(min == ""):
                 min = self.so.get_back("万円", each.text)
             if(min == ""):
-                min = "425"                
+                min = 0
             min = self.so.replace(",", "", str(min)).strip()
             self.salary_min_list.append(int(min))
 
@@ -114,9 +117,26 @@ class Parser:
             if(forward != ""):
                 max = self.so.get_back("万円", forward)
             if (max == ""):
-                max = "556"
+                max = 0
             max = self.so.replace(",", "", str(max)).strip()
             self.salary_max_list.append(int(max))
 
     def get_salary_max_list(self):
         return self.salary_max_list
+
+    def get_location(self):
+        keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
+        values = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
+        for key, value in zip(keys, values):
+            if(key.text.strip() == "勤務地"):
+                location = self.so.get_back("都", value.text)
+                if(location == ""):
+                    location = self.so.get_back("道", value.text)
+                if(location == ""):
+                    location = self.so.get_back("府", value.text)
+                if(location == ""):
+                    location = self.so.get_back("県", value.text)
+                return self.location_list.append(str(location))
+
+    def get_location_list(self):
+        return self.location_list
