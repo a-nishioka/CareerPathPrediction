@@ -15,6 +15,7 @@ class Parser:
     salary_max_list = []
     location_list = []
     environment_list = []
+    framework_list = []
 
     def __init__(self):
         self.soup = Soup.Soup()
@@ -28,6 +29,7 @@ class Parser:
         self.salary_max_list = []    
         self.location_list = []
         self.environment_list = []
+        self.framework_list = []
 
     def __del__(self):
         del self.soup
@@ -41,6 +43,7 @@ class Parser:
         del self.salary_max_list
         del self.location_list
         del self.environment_list
+        del self.framework_list
 
     def parse(self, html_text): 
         self.parse_tree = self.soup.markup(html_text)
@@ -51,6 +54,7 @@ class Parser:
         self.get_salary_max()
         self.get_location()
         self.get_environment()
+        self.get_framework()
         return
 
     def next(self):
@@ -128,13 +132,13 @@ class Parser:
 
     def get_location(self):
         keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
-        address_list = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
-        for key, address in zip(keys, address_list):
+        values = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
+        for key, value in zip(keys, values):
             if(key.text.strip() == "勤務地"):
                 part_of_speech_list = ["名詞"]
-                pos_location = self.token.get_part_of_speech(part_of_speech_list, address.text)
-                if len(pos_location) > 0:
-                    self.location_list.append(str(pos_location[0]))
+                address = self.token.get_part_of_speech(part_of_speech_list, value.text)
+                if len(address) > 0:
+                    self.location_list.append(str(address[0]))
                     next
 
     def get_location_list(self):
@@ -142,14 +146,28 @@ class Parser:
 
     def get_environment(self):
         keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
-        environment_list = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
-        for key, environment in zip(keys, environment_list):
+        values = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
+        for key, value in zip(keys, values):
             if(key.text.strip() == "開発環境"):
                 languages = []
-                for each in environment.find_all("a", class_="c-job_offer-detail__description-link"):
+                for each in value.find_all("a", class_="c-job_offer-detail__description-link"):
                     languages.append(each.text)
                 self.environment_list.append(str(languages))                    
                 print(str(','.join(languages)))
 
     def get_environment_list(self):
         return self.environment_list
+
+    def get_framework(self):
+        keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
+        values = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
+        for key, value in zip(keys, values):
+            if(key.text.strip() == "フレームワーク"):
+                frameworks = []
+                for each in value.find_all("a", class_="c-job_offer-detail__description-link"):
+                    frameworks.append(each.text)
+                self.framework_list.append(str(frameworks))                    
+                print(str(','.join(frameworks)))
+
+    def get_framework_list(self):
+        return self.framework_list        

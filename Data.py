@@ -17,6 +17,7 @@ class Data:
         self.db.truncate("salary_max")
         self.db.truncate("location")
         self.db.truncate("environment")
+        self.db.truncate("framework")
 
     def insert(self, parser):
         self.insert_company_name(parser.get_offer_id_list(), 
@@ -31,6 +32,8 @@ class Data:
                                parser.get_location_list())
         self.insert_environment(parser.get_offer_id_list(),
                                parser.get_environment_list())
+        self.insert_framework(parser.get_offer_id_list(),
+                               parser.get_framework_list())                               
 
     def insert_company_name(self, offer_id_list, company_name_list):
         self.db.insert("company_name", "company_name",
@@ -54,4 +57,8 @@ class Data:
 
     def insert_environment(self, offer_id_list, environment_list):
         self.db.insert("environment", "environment",
-                       offer_id_list, environment_list)                      
+                       offer_id_list, environment_list)
+
+    def insert_framework(self, offer_id_list, framework_list):
+        self.db.insert("framework", "framework",
+                       offer_id_list, framework_list)                    
