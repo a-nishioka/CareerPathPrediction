@@ -80,7 +80,6 @@ class Parser:
             occupation = each.text.strip()
             part_of_speech_list = ["名詞"]
             pos_occupation = self.token.get_part_of_speech(part_of_speech_list, occupation)
-            print(pos_occupation)
             reunion = []
             for each in pos_occupation:
                 removed_punctuation = self.so.remove_punctuation(each)
@@ -89,7 +88,6 @@ class Parser:
                 removed_city = self.so.remove_city(removed_region)
                 reunion.append(removed_city)
             self.occupation_list.append(''.join(reunion))
-            print(''.join(reunion))
 
     def get_occupation_list(self):
         return self.occupation_list
@@ -126,17 +124,15 @@ class Parser:
 
     def get_location(self):
         keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
-        values = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
-        for key, value in zip(keys, values):
+        address_list = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
+        for key, address in zip(keys, address_list):
             if(key.text.strip() == "勤務地"):
-                location = self.so.get_back("都", value.text)
-                if(location == ""):
-                    location = self.so.get_back("道", value.text)
-                if(location == ""):
-                    location = self.so.get_back("府", value.text)
-                if(location == ""):
-                    location = self.so.get_back("県", value.text)
-                return self.location_list.append(str(location))
+                part_of_speech_list = ["名詞"]
+                pos_location = self.token.get_part_of_speech(part_of_speech_list, address.text)
+                if len(pos_location) > 0:
+                    self.location_list.append(str(pos_location[0]))
+                    print(str(pos_location[0]))
+                    next
 
     def get_location_list(self):
         return self.location_list
