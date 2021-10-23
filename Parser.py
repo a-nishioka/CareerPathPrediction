@@ -14,6 +14,7 @@ class Parser:
     salary_min_list = []
     salary_max_list = []
     location_list = []
+    environment_list = []
 
     def __init__(self):
         self.soup = Soup.Soup()
@@ -26,6 +27,7 @@ class Parser:
         self.salary_min_list = []
         self.salary_max_list = []    
         self.location_list = []
+        self.environment_list = []
 
     def __del__(self):
         del self.soup
@@ -38,6 +40,7 @@ class Parser:
         del self.salary_min_list
         del self.salary_max_list
         del self.location_list
+        del self.environment_list
 
     def parse(self, html_text): 
         self.parse_tree = self.soup.markup(html_text)
@@ -47,6 +50,7 @@ class Parser:
         self.get_salary_min()
         self.get_salary_max()
         self.get_location()
+        self.get_environment()
         return
 
     def next(self):
@@ -109,7 +113,7 @@ class Parser:
         return self.salary_min_list
 
     def get_salary_max(self):
-        for each in self.parse_tree.find_all("strong", class_="c-job_offer-detail__salary"): 
+        for each in self.parse_tree.find_all("strong", class_="c-job_offer-detail__salary"):
             max = ""
             forward = self.so.get_forward("〜 ", each.text)
             if(forward != ""):
@@ -131,8 +135,21 @@ class Parser:
                 pos_location = self.token.get_part_of_speech(part_of_speech_list, address.text)
                 if len(pos_location) > 0:
                     self.location_list.append(str(pos_location[0]))
-                    print(str(pos_location[0]))
                     next
 
     def get_location_list(self):
         return self.location_list
+
+    def get_environment(self):
+        keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
+        environment_list = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
+        for key, environment in zip(keys, environment_list):
+            if(key.text.strip() == "開発環境"):
+                languages = []
+                for each in environment.find_all("a", class_="c-job_offer-detail__description-link"):
+                    languages.append(each.text)
+                self.environment_list.append(str(languages))                    
+                print(str(','.join(languages)))
+
+    def get_environment_list(self):
+        return self.environment_list

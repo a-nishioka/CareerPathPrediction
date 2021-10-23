@@ -12,6 +12,7 @@ data.truncate()
 base_url = "https://paiza.jp"
 html = crawler.crawl("https://paiza.jp/career/job_offers")
 
+# データパース
 while True:
     parser.parse(html.text)
     data.insert(parser)
@@ -25,3 +26,6 @@ while True:
 del crawler
 del parser
 del data
+
+# データ前処理
+# 最低値、最高値の0を中央値で埋める
