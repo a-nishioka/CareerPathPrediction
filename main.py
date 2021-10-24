@@ -1,19 +1,28 @@
 import Crawler
 import Parser
 import Data
+import time
 
 crawler = Crawler.Crawler()
+parser = Parser.Parser()
+data = Data.Data()
+
+data.truncate()
+
+base_url = "https://paiza.jp"
 html = crawler.crawl("https://paiza.jp/career/job_offers")
 
-# 分析用コード
-print(html.text)
+# データパース
+while True:
+    parser.parse(html.text)
+    data.insert(parser)
+    next_page = parser.next()
+    if next_page != "":
+        time.sleep(3)
+        html = crawler.crawl(base_url + next_page)
+    else:
+        break
 
-parser = Parser.Parser()
-parser.parse(html.text)
-
-data = Data.Data()
-data.truncate_company_name()
-data.insert_company_name(parser.get_offer_id_list(), parser.get_company_name_list())
-
-del data
+del crawler
 del parser
+del data
