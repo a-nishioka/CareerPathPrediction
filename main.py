@@ -26,6 +26,3 @@ while True:
 del crawler
 del parser
 del data
-
-# データ前処理
-# 最低値、最高値の0を中央値で埋める
