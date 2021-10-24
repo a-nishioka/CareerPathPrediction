@@ -153,7 +153,6 @@ class Parser:
                 for each in value.find_all("a", class_="c-job_offer-detail__description-link"):
                     languages.append(each.text)
                 self.environment_list.append(str(','.join(languages)))                    
-                print(str(','.join(languages)))
 
     def get_environment_list(self):
         return self.environment_list
@@ -167,7 +166,6 @@ class Parser:
                 for each in value.find_all("a", class_="c-job_offer-detail__description-link"):
                     frameworks.append(each.text)
                 self.framework_list.append(str(','.join(frameworks)))                    
-                print(str(','.join(frameworks)))
 
     def get_framework_list(self):
         return self.framework_list        
