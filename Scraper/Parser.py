@@ -16,6 +16,8 @@ class Parser:
     location_list = []
     environment_list = []
     framework_list = []
+    last_page = 0
+    next_page = 0
 
     def __init__(self):
         self.soup = Soup.Soup()
@@ -30,6 +32,8 @@ class Parser:
         self.location_list = []
         self.environment_list = []
         self.framework_list = []
+        self.last_page = 0
+        self.next_page = 0
 
     def __del__(self):
         del self.soup
@@ -44,9 +48,13 @@ class Parser:
         del self.location_list
         del self.environment_list
         del self.framework_list
+        del self.last_page
+        del self.next_page
 
     def parse(self, html_text): 
         self.parse_tree = self.soup.markup(html_text)
+        if self.last_page == 0:
+            self.get_last_page_num()
         self.get_offer_id()
         self.get_company_name()
         self.get_occupation()
@@ -60,9 +68,15 @@ class Parser:
     def next(self):
         tag = self.parse_tree.find("a", {"rel":'next'})
         if(tag != None):
+            num = int(self.so.get_forward("=", tag.get("href")))
+            if(num > self.next_page):
+                self.next_page = num
             return tag.get("href")
         else:
             return ""
+
+    def get_next_page(self):
+        return self.next_page
 
     def get_offer_id(self):
         self.offer_id_list = []
@@ -168,4 +182,13 @@ class Parser:
                 self.framework_list.append(str(','.join(frameworks)))                    
 
     def get_framework_list(self):
-        return self.framework_list        
+        return self.framework_list
+
+    def get_last_page_num(self):
+        for each in self.parse_tree.find_all("a", class_="c-pager-link"):
+            num = int(self.so.get_forward("=", each.get("href")))
+            if(num > self.last_page):
+                self.last_page = num
+    
+    def get_last_page(self):
+        return self.last_page

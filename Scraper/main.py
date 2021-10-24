@@ -3,6 +3,7 @@ import Parser
 import Data
 import time
 import File
+import datetime
 
 crawler = Crawler.Crawler()
 parser = Parser.Parser()
@@ -17,13 +18,19 @@ file.write_html(html.text)
 del file
 
 # データパース
+parser.parse(html.text)
+data.insert(parser)
+print("[", datetime.datetime.now().isoformat(), "]", "Progress:", "  1 / {:3d}".format(parser.get_last_page()))
+next_page = parser.next()
+
 while True:
-    parser.parse(html.text)
-    data.insert(parser)
-    next_page = parser.next()
     if next_page != "":
         time.sleep(3)
         html = crawler.crawl(base_url + next_page)
+        parser.parse(html.text)
+        data.insert(parser)
+        print("[", datetime.datetime.now().isoformat(), "]", "Progress:", "{:3d} / {:3d}".format(parser.get_next_page(), parser.get_last_page()))
+        next_page = parser.next()
     else:
         break
 
