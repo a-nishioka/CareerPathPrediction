@@ -2,15 +2,19 @@ import Crawler
 import Parser
 import Data
 import time
+import File
 
 crawler = Crawler.Crawler()
 parser = Parser.Parser()
 data = Data.Data()
+file = File.File()
 
 data.truncate()
 
 base_url = "https://paiza.jp"
 html = crawler.crawl("https://paiza.jp/career/job_offers")
+file.write_html(html.text)
+del file
 
 # データパース
 while True:
