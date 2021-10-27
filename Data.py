@@ -98,8 +98,4 @@ class Data:
             framework \
         ON \
             job_list.offer_id = framework.offer_id"
-
-
-
-
         return self.db.combine(sql)
