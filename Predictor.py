@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import Data
+import StringOperation
 
 data = Data.Data()
 
@@ -13,8 +14,12 @@ print(dataset.head(5))
 print('Number of Rows: %i   Number of Columns: %i' % dataset.shape)
 print(dataset.describe())
 
-plt.hist(dataset['salary_min'])
-plt.show()
+#plt.hist(dataset['salary_min'])
+#plt.show()
 
-plt.hist(dataset['salary_max'])
-plt.show()
+#plt.hist(dataset['salary_max'])
+#plt.show()
+
+so = StringOperation.StringOperation()
+so.check_blank(dataset)
+

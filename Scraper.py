@@ -15,7 +15,6 @@ data.truncate()
 base_url = "https://paiza.jp"
 html = crawler.crawl("https://paiza.jp/career/job_offers")
 file.write_html(html.text)
-del file
 
 # データパース
 parser.parse(html.text)
@@ -34,6 +33,7 @@ while True:
     else:
         break
 
+del file
 del crawler
 del parser
 del data

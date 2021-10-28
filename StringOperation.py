@@ -261,9 +261,10 @@ class StringOperation:
         return result
 
     def remove_prefecture(self, text):
-        result = text.translate(str.maketrans(
-            '', '', ''.join(self.prefecture_list)))
-        return result
+        for each in self.prefecture_list:
+            if(text == each):
+                return ""
+        return text
 
     def remove_region(self, text):
         for each in self.region_list:
@@ -277,7 +278,11 @@ class StringOperation:
                 return ""
         return text
 
-    # 正規化
     def normalize(self, text):
         unicodedata.normalize("NFKC", text)
         return text
+
+    def check_blank(self, data):
+        for col in data.columns:
+            blank_data = (data[data[col] == ""])
+            print(col, blank_data.shape[0])

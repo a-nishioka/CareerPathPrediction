@@ -1,3 +1,5 @@
+from io import TextIOWrapper
+from File import File
 import Soup
 import StringOperation
 import Token
@@ -18,6 +20,7 @@ class Parser:
     framework_list = []
     last_page = 0
     next_page = 0
+    f = TextIOWrapper
 
     def __init__(self):
         self.soup = Soup.Soup()
@@ -34,6 +37,7 @@ class Parser:
         self.framework_list = []
         self.last_page = 0
         self.next_page = 0
+        self.f = open("Occupation.txt", 'w', encoding='UTF-8')
 
     def __del__(self):
         del self.soup
@@ -50,6 +54,7 @@ class Parser:
         del self.framework_list
         del self.last_page
         del self.next_page
+        self.f.close()
 
     def parse(self, html_text): 
         self.parse_tree = self.soup.markup(html_text)
@@ -108,6 +113,8 @@ class Parser:
                 removed_prefecture = self.so.remove_prefecture(removed_punctuation)
                 removed_region = self.so.remove_region(removed_prefecture)
                 removed_city = self.so.remove_city(removed_region)
+                if(removed_city != ""):
+                    self.f.write(str(removed_city + "\n"))
                 reunion.append(removed_city)
             self.occupation_list.append(''.join(reunion))
 
