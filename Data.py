@@ -1,4 +1,5 @@
 import DB
+import pandas as pd
 
 
 class Data:
@@ -98,4 +99,10 @@ class Data:
             framework \
         ON \
             job_list.offer_id = framework.offer_id"
-        return self.db.combine(sql)
+        rows = self.db.combine(sql)
+
+        new_result = [one for one in rows]
+        dataset = pd.DataFrame(new_result)
+        dataset.columns = ["offer_id", "company_name", "occupation",
+                           "salary_min", "salary_max", "location", "environment", "framework"]
+        return dataset
