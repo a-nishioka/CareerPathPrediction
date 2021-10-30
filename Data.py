@@ -4,21 +4,48 @@ import pandas as pd
 
 class Data:
     db = DB.DB()
+    job_list = "job_list"
+    offer_id = "offer_id"
+    company_name = "company_name"
+    occupation = "occupation"
+    salary_min = "salary_min"
+    salary_max = "salary_max"
+    location = "location"
+    environment = "environment"
+    framework = "framework"
 
     def __init__(self):
         self.db.open()
-
+        self.offer_id = "offer_id"
+        self.company_name = "company_name"
+        self.occupation = "occupation"
+        self.salary_min = "salary_min"
+        self.salary_max = "salary_max"
+        self.location = "location"
+        self.environment = "environment"
+        self.framework = "framework"
+    
     def __del__(self):
         self.db.close()
+        del self.db
+        del self.job_list
+        del self.offer_id
+        del self.company_name
+        del self.occupation
+        del self.salary_min
+        del self.salary_max
+        del self.location
+        del self.environment
+        del self.framework
 
     def truncate(self):
-        self.db.truncate("job_list")
-        self.db.truncate("occupation")
-        self.db.truncate("salary_min")
-        self.db.truncate("salary_max")
-        self.db.truncate("location")
-        self.db.truncate("environment")
-        self.db.truncate("framework")
+        self.db.truncate(self.job_list)
+        self.db.truncate(self.occupation)
+        self.db.truncate(self.salary_min)
+        self.db.truncate(self.salary_max)
+        self.db.truncate(self.location)
+        self.db.truncate(self.environment)
+        self.db.truncate(self.framework)
 
     def insert(self, parser):
         self.insert_company_name(parser.get_offer_id_list(),
@@ -37,31 +64,31 @@ class Data:
                               parser.get_framework_list())
 
     def insert_company_name(self, offer_id_list, company_name_list):
-        self.db.insert("job_list", "company_name",
+        self.db.insert(self.job_list, self.company_name,
                        offer_id_list, company_name_list)
 
     def insert_occupation(self, offer_id_list, occupation_list):
-        self.db.insert("occupation", "occupation",
+        self.db.insert(self.occupation, self.occupation,
                        offer_id_list, occupation_list)
 
     def insert_salary_min(self, offer_id_list, salary_min_list):
-        self.db.insert("salary_min", "salary_min",
+        self.db.insert(self.salary_min, self.salary_min,
                        offer_id_list, salary_min_list)
 
     def insert_salary_max(self, offer_id_list, salary_max_list):
-        self.db.insert("salary_max", "salary_max",
+        self.db.insert(self.salary_max, self.salary_max,
                        offer_id_list, salary_max_list)
 
     def insert_location(self, offer_id_list, location_list):
-        self.db.insert("location", "location",
+        self.db.insert(self.location, self.location,
                        offer_id_list, location_list)
 
     def insert_environment(self, offer_id_list, environment_list):
-        self.db.insert("environment", "environment",
+        self.db.insert(self.environment, self.environment,
                        offer_id_list, environment_list)
 
     def insert_framework(self, offer_id_list, framework_list):
-        self.db.insert("framework", "framework",
+        self.db.insert(self.framework, self.framework,
                        offer_id_list, framework_list)
 
     def combine(self):
@@ -103,6 +130,6 @@ class Data:
 
         new_result = [one for one in rows]
         dataset = pd.DataFrame(new_result)
-        dataset.columns = ["offer_id", "company_name", "occupation",
-                           "salary_min", "salary_max", "location", "environment", "framework"]
+        dataset.columns = [self.offer_id, self.company_name, self.occupation,
+                           self.salary_min, self.salary_max, self.location, self.environment, self.framework]
         return dataset

@@ -1,25 +1,16 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import Data
-import StringOperation
+import Analysis
 
 data = Data.Data()
+analysis = Analysis.Analysis()
 
 # データの結合及びデータフレーム化
 dataset = data.combine()
+analysis.analyse(dataset)
+
+# 視覚化
+analysis.hist(dataset, data.salary_min)
+analysis.hist(dataset, data.salary_max)
+
 del data
-
-print(dataset.head(5))
-
-print('Number of Rows: %i   Number of Columns: %i' % dataset.shape)
-print(dataset.describe())
-
-#plt.hist(dataset['salary_min'])
-#plt.show()
-
-#plt.hist(dataset['salary_max'])
-#plt.show()
-
-so = StringOperation.StringOperation()
-so.check_blank(dataset)
-
+del analysis
