@@ -16,27 +16,9 @@ class Data:
 
     def __init__(self):
         self.db.open()
-        self.offer_id = "offer_id"
-        self.company_name = "company_name"
-        self.occupation = "occupation"
-        self.salary_min = "salary_min"
-        self.salary_max = "salary_max"
-        self.location = "location"
-        self.environment = "environment"
-        self.framework = "framework"
     
     def __del__(self):
         self.db.close()
-        del self.db
-        del self.job_list
-        del self.offer_id
-        del self.company_name
-        del self.occupation
-        del self.salary_min
-        del self.salary_max
-        del self.location
-        del self.environment
-        del self.framework
 
     def truncate(self):
         self.db.truncate(self.job_list)
