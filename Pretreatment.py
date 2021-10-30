@@ -1,3 +1,5 @@
+import numpy as np
+
 class Pretreatment:
 
     def __init__(self):
@@ -14,3 +16,15 @@ class Pretreatment:
 
     def get_unique_list(self, text_array):
         return list(set(text_array))
+
+    def get_dummy_mat(self, dataset, unique_list, col_name):
+        dummy_mat = np.zeros((dataset.shape[0],  len(unique_list)))
+
+        for i, row in enumerate(dataset[col_name]):
+            tmp = row.split("/")
+            for one in tmp:
+                one = one.strip()
+                if one in unique_list:
+                    idx = unique_list.index(one)
+                    dummy_mat[i, idx] = 1
+        return dummy_mat
