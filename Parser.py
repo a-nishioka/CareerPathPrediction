@@ -123,6 +123,8 @@ class Parser:
             result = ''.join(reunion)
             result = self.so.remove_hiragana(result)
             self.occupation_list.append(result)
+        else:
+            self.occupation_list.append("")
 
     def get_occupation_list(self):
         return self.occupation_list
