@@ -119,12 +119,13 @@ class Parser:
                 if(removed_stop_word != ""):
                     self.f.write(str(removed_stop_word.upper() + "\n"))
                     reunion.append(removed_stop_word.upper())
-        if(len(reunion) > 0):
-            result = ''.join(reunion)
+        result = ''.join(reunion)
+        if(result is None):
+            self.occupation_list.append("")
+        else:
             result = self.so.remove_hiragana(result)
             self.occupation_list.append(result)
-        else:
-            self.occupation_list.append("")
+            
 
     def get_occupation_list(self):
         return self.occupation_list

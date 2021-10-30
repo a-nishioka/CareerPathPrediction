@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from pandas.core.construction import array
 
 
 class Pretreatment:
@@ -10,9 +11,17 @@ class Pretreatment:
     def __del__(self):
         return
 
+    def fill_none_with_blank(self, dataframe, column_name, text):
+        for i in range(len(dataframe[column_name])):
+            if(dataframe[column_name][i] is None):
+                s = None
+                dataframe[column_name][i] = s or ""
+
     def get_one_hot_vector(self, dataset, column_name):
         element_list = self.get_element_list(dataset, column_name)
         unique_list = self.get_unique_list(element_list)
+        for each in unique_list:
+            print(each)
         frame_dummy = self.get_dummy_mat(dataset, unique_list, column_name)
         data_frame = pd.DataFrame(frame_dummy, columns=unique_list)
         data_frame.drop(columns="", inplace=True)

@@ -6,8 +6,8 @@ data = Data.Data()
 analysis = Analysis.Analysis()
 
 # データの結合及びデータフレーム化
-dataset = data.combine()
-analysis.analyse(dataset)
+dataframe = data.combine()
+analysis.analyse(dataframe)
 
 # 視覚化
 #analysis.hist(dataset, data.salary_min)
@@ -15,10 +15,14 @@ analysis.analyse(dataset)
 
 # ダミー変数化
 pretreatment = Pretreatment.Pretreatment()
-enviroment_df = pretreatment.get_one_hot_vector(dataset, data.environment)
+pretreatment.fill_none_with_blank(dataframe, data.occupation, "")
+occupation_df = pretreatment.get_one_hot_vector(dataframe, data.occupation)
+print(occupation_df)
+
+enviroment_df = pretreatment.get_one_hot_vector(dataframe, data.environment)
 print(enviroment_df)
 
-framework_df = pretreatment.get_one_hot_vector(dataset, data.framework)
+framework_df = pretreatment.get_one_hot_vector(dataframe, data.framework)
 print(framework_df)
 
 del data
