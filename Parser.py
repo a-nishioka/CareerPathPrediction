@@ -117,9 +117,12 @@ class Parser:
                 removed_framework = self.so.remove_framework(removed_language)
                 removed_stop_word = self.so.remove_stop_word(removed_framework)
                 if(removed_stop_word != ""):
-                    self.f.write(str(removed_stop_word + "\n"))
-                reunion.append(removed_stop_word)
-            self.occupation_list.append(''.join(reunion))
+                    self.f.write(str(removed_stop_word.upper() + "\n"))
+                    reunion.append(removed_stop_word.upper())
+        if(len(reunion) > 0):
+            result = ''.join(reunion)
+            result = self.so.remove_hiragana(result)
+            self.occupation_list.append(result)
 
     def get_occupation_list(self):
         return self.occupation_list
