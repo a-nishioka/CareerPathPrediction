@@ -2,7 +2,6 @@ import Data
 import Analysis
 import Pretreatment
 
-
 data = Data.Data()
 analysis = Analysis.Analysis()
 

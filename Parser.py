@@ -113,9 +113,12 @@ class Parser:
                 removed_prefecture = self.so.remove_prefecture(removed_punctuation)
                 removed_region = self.so.remove_region(removed_prefecture)
                 removed_city = self.so.remove_city(removed_region)
-                if(removed_city != ""):
-                    self.f.write(str(removed_city + "\n"))
-                reunion.append(removed_city)
+                removed_language = self.so.remove_language(removed_city)
+                removed_framework = self.so.remove_framework(removed_language)
+                removed_stop_word = self.so.remove_stop_word(removed_framework)
+                if(removed_stop_word != ""):
+                    self.f.write(str(removed_stop_word + "\n"))
+                reunion.append(removed_stop_word)
             self.occupation_list.append(''.join(reunion))
 
     def get_occupation_list(self):
