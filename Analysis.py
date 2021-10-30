@@ -1,46 +1,42 @@
-from matplotlib import pyplot
 import Plot
 import StringOperation
-
+import DFOperation
 
 class Analysis:
     plot = Plot.Plot()
     so = StringOperation.StringOperation()
+    dfo = DFOperation.DFOperation()
 
     def __init__(self):
         self.pyplot = Plot.Plot()
         self.so = StringOperation.StringOperation()
+        self.dfo = DFOperation.DFOperation()
 
     def __del__(self):
         del self.pyplot
         del self.so
+        del self.dfo
 
-    def analyse(self, dataset):
-        self.head(dataset, 5)
+    def analyse(self, dataframe):
+        self.head(dataframe, 5)
         print("------------------------------")
-        self.get_datanum(dataset)
+        self.get_datanum(dataframe)
         print("------------------------------")
-        self.describe(dataset)
+        self.describe(dataframe)
         print("------------------------------")
-        self.so.check_blank(dataset)
+        self.dfo.check_none(dataframe)
         print("------------------------------")
-        self.so.check_zero(dataset)
-        print("------------------------------")
+        self.dfo.check_blank(dataframe)
+        print("------------------------------")        
 
-    def head(self, dataset, num):
-        print(dataset.head(num))
+    def head(self, dataframe, num):
+        print(dataframe.head(num))
 
-    def get_datanum(self, dataset):
-        print('Number of Rows: %i   Number of Columns: %i' % dataset.shape)
+    def get_datanum(self, dataframe):
+        print('Number of Rows: %i   Number of Columns: %i' % dataframe.shape)
 
-    def describe(self, dataset):
-        print(dataset.describe())
+    def describe(self, dataframe):
+        print(dataframe.describe())
 
-    def hist(self, dataset, column_name):
-        self.pyplot.hist(dataset, column_name)
-
-    def check_blank(self, dataset):
-        self.so.check_blank(dataset)
-
-    def check_zero(self, dataset):
-        self.so.check_zero(dataset)
+    def hist(self, dataframe, column_name):
+        self.pyplot.hist(dataframe, column_name)
