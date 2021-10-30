@@ -17,10 +17,15 @@ class Analysis:
 
     def analyse(self, dataset):
         self.head(dataset, 5)
+        print("------------------------------")
         self.get_datanum(dataset)
+        print("------------------------------")
         self.describe(dataset)
+        print("------------------------------")
         self.so.check_blank(dataset)
+        print("------------------------------")
         self.so.check_zero(dataset)
+        print("------------------------------")
 
     def head(self, dataset, num):
         print(dataset.head(num))
