@@ -21,7 +21,7 @@ class Pretreatment:
         dummy_mat = np.zeros((dataset.shape[0],  len(unique_list)))
 
         for i, row in enumerate(dataset[col_name]):
-            tmp = row.split("/")
+            tmp = row.split(",")
             for one in tmp:
                 one = one.strip()
                 if one in unique_list:
