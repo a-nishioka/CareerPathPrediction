@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+
 
 class Pretreatment:
 
@@ -7,6 +9,14 @@ class Pretreatment:
 
     def __del__(self):
         return
+
+    def get_one_hot_vector(self, dataset, column_name):
+        element_list = self.get_element_list(dataset, column_name)
+        unique_list = self.get_unique_list(element_list)
+        frame_dummy = self.get_dummy_mat(dataset, unique_list, column_name)
+        data_frame = pd.DataFrame(frame_dummy, columns=unique_list)
+        data_frame.drop(columns="", inplace=True)
+        return data_frame
 
     def get_element_list(self, dataset, column_name):
         all_element_list = ",".join(dataset[column_name])

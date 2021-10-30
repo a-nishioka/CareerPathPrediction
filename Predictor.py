@@ -1,7 +1,7 @@
 import Data
 import Analysis
 import Pretreatment
-import pandas as pd
+
 
 data = Data.Data()
 analysis = Analysis.Analysis()
@@ -16,16 +16,11 @@ analysis.analyse(dataset)
 
 # ダミー変数化
 pretreatment = Pretreatment.Pretreatment()
-environment_ele_list = pretreatment.get_element_list(dataset, data.environment)
-enviroment_unique_list = pretreatment.get_unique_list(environment_ele_list)
+enviroment_df = pretreatment.get_one_hot_vector(dataset, data.environment)
+print(enviroment_df)
 
-enviroment_frame_dummy = pretreatment.get_dummy_mat(dataset, enviroment_unique_list, data.environment)
-enviroment_frame_df = pd.DataFrame(enviroment_frame_dummy, columns=enviroment_unique_list)
-enviroment_frame_df.drop(columns="", inplace=True)
-print(enviroment_frame_df)
-
-framework_ele_list = pretreatment.get_element_list(dataset, data.framework)
-framework_unique_list = pretreatment.get_unique_list(framework_ele_list)
+framework_df = pretreatment.get_one_hot_vector(dataset, data.framework)
+print(framework_df)
 
 del data
 del analysis
