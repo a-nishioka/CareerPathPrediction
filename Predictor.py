@@ -12,5 +12,7 @@ analysis.analyse(dataset)
 analysis.hist(dataset, data.salary_min)
 analysis.hist(dataset, data.salary_max)
 
+# データ前処理
+
 del data
 del analysis

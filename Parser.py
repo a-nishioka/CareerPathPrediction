@@ -130,7 +130,7 @@ class Parser:
             if(min == ""):
                 min = self.so.get_back("万円", each.text)
             if(min == ""):
-                min = 0
+                min = "0"
             min = self.so.replace(",", "", str(min)).strip()
             self.salary_min_list.append(int(min))
 
@@ -144,7 +144,7 @@ class Parser:
             if(forward != ""):
                 max = self.so.get_back("万円", forward)
             if (max == ""):
-                max = 0
+                max = "0"
             max = self.so.replace(",", "", str(max)).strip()
             self.salary_max_list.append(int(max))
 

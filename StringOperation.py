@@ -283,6 +283,13 @@ class StringOperation:
         return text
 
     def check_blank(self, data):
+        print("check_black result")
         for col in data.columns:
             blank_data = (data[data[col] == ""])
             print(col, blank_data.shape[0])
+
+    def check_zero(self, data):
+        print("check_zero result")
+        for col in data.columns:
+            zero_data = (data[data[col] == "0"])
+            print(col, zero_data.shape[0])            

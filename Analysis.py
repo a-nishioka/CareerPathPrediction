@@ -19,7 +19,8 @@ class Analysis:
         self.head(dataset, 5)
         self.get_datanum(dataset)
         self.describe(dataset)
-        self.so.check_blank(dataset)      
+        self.so.check_blank(dataset)
+        self.so.check_zero(dataset)
 
     def head(self, dataset, num):
         print(dataset.head(num))
@@ -35,3 +36,6 @@ class Analysis:
 
     def check_blank(self, dataset):
         self.so.check_blank(dataset)
+
+    def check_zero(self, dataset):
+        self.so.check_zero(dataset)
