@@ -115,3 +115,6 @@ class Data:
         dataset.columns = [self.offer_id, self.company_name, self.occupation,
                            self.salary_min, self.salary_max, self.location, self.environment, self.framework]
         return dataset
+
+    def output_csv(self, dataframe):
+        dataframe.to_csv("sample.csv")

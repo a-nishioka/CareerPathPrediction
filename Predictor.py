@@ -25,6 +25,9 @@ print(enviroment_df)
 framework_df = pretreatment.get_one_hot_vector(dataframe, data.framework)
 print(framework_df)
 
+merged_df = pretreatment.merge_dummies(dataframe, occupation_df, enviroment_df, framework_df)
+data.output_csv(merged_df)
+
 del data
 del analysis
 del pretreatment

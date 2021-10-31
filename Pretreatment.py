@@ -47,3 +47,9 @@ class Pretreatment:
                     idx = unique_list.index(one)
                     dummy_mat[i, idx] = 1
         return dummy_mat
+
+    def merge_dummies(self, dataframe, occupation_df, environment_df, framework_df):
+        merged_df = pd.merge(dataframe, occupation_df, left_index=True, right_index=True)
+        merged_df = pd.merge(merged_df, environment_df, left_index=True, right_index=True)
+        merged_df = pd.merge(merged_df, framework_df, left_index=True, right_index=True)
+        return merged_df
