@@ -34,8 +34,8 @@ class Data:
     def insert(self, parser):
         self.insert_company_name(parser.get_offer_id_list(),
                                  parser.get_company_name_list())
-        self.insert_rank(parser.get_offer_id_list(),
-                         parser.get_pass_rank_list())
+        self.insert_pass_rank(parser.get_offer_id_list(),
+                              parser.get_pass_rank_list())
         self.insert_occupation(parser.get_offer_id_list(),
                                parser.get_occupation_list())
         self.insert_salary_min(parser.get_offer_id_list(),
@@ -53,7 +53,7 @@ class Data:
         self.db.insert(self.job_list, self.company_name,
                        offer_id_list, company_name_list)
 
-    def insert_rank(self, offer_id_list, rank_list):
+    def insert_pass_rank(self, offer_id_list, rank_list):
         self.db.insert(self.pass_rank, self.pass_rank,
                        offer_id_list, rank_list)
 
@@ -125,7 +125,7 @@ class Data:
 
         new_result = [one for one in rows]
         dataset = pd.DataFrame(new_result)
-        dataset.columns = [self.offer_id, self.company_name, self.occupation,
+        dataset.columns = [self.offer_id, self.company_name, self.pass_rank, self.occupation,
                            self.salary_min, self.salary_max, self.location, self.environment, self.framework]
         return dataset
 

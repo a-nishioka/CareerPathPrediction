@@ -133,9 +133,9 @@ class Parser:
                 occupation = self.so.remove_framework(occupation)
                 occupation = self.so.remove_position(occupation)
                 occupation = self.so.remove_hiragana(occupation)
+                occupation = occupation.upper()
                 occupation = self.so.remove_stop_word(occupation)
                 if(occupation != ""):
-                    occupation = occupation.upper()
                     self.f.write(str(occupation + "\n"))
                     reunion.append(occupation)
         result = ''.join(reunion)

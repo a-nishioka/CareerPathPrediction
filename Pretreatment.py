@@ -18,19 +18,20 @@ class Pretreatment:
         for i in range(len(dataframe[column_name])):
             if(dataframe[column_name][i] is None):
                 s = None
-                dataframe[column_name][i] = s or ""
+                dataframe[column_name][i] = s or text
 
     def get_one_hot_vector(self, dataset, column_name):
         element_list = self.get_element_list(dataset, column_name)
         unique_list = self.so.get_unique_list(element_list)
-        for each in unique_list:
-            print(each)
         frame_dummy = self.get_dummy_mat(dataset, unique_list, column_name)
         data_frame = pd.DataFrame(frame_dummy, columns=unique_list)
-        data_frame.drop(columns="", inplace=True)
+        if "" in data_frame.columns:
+            data_frame.drop(columns="", inplace=True)
         return data_frame
 
     def get_element_list(self, dataset, column_name):
+        for each in dataset[column_name]:
+            print(each)
         all_element_list = ",".join(dataset[column_name])
         element_list = str(all_element_list).split(",")
         all_element_list = [element.strip() for element in element_list]
@@ -48,7 +49,9 @@ class Pretreatment:
                     dummy_mat[i, idx] = 1
         return dummy_mat
 
-    def merge_dummies(self, dataframe, occupation_df, environment_df, framework_df):
+    def merge_dummies(self, dataframe, pass_rank_df, occupation_df, environment_df, framework_df):
+        merged_df = pd.merge(dataframe, pass_rank_df,
+                             left_index=True, right_index=True)
         merged_df = pd.merge(dataframe, occupation_df,
                              left_index=True, right_index=True)
         merged_df = pd.merge(merged_df, environment_df,
