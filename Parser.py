@@ -138,11 +138,11 @@ class Parser:
                 if(occupation != ""):
                     self.f.write(str(occupation + "\n"))
                     reunion.append(occupation)
-        result = ''.join(reunion)
-        if(result is None):
-            self.occupation_list.append("")
-        else:
-            self.occupation_list.append(result)
+            result = ''.join(reunion)
+            if(result is None):
+                self.occupation_list.append("")
+            else:
+                self.occupation_list.append(result)
             
 
     def get_occupation_list(self):
