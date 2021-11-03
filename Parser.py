@@ -111,9 +111,9 @@ class Parser:
             pass_rank = each.find("span").text.strip()
             pass_rank = self.so.get_forward("：", pass_rank)
             if(pass_rank == ""):
-                self.occupation_list.append("")
+                self.pass_rank_list.append("")
             else:
-                self.occupation_list.append(str(pass_rank))
+                self.pass_rank_list.append(str(pass_rank))
 
     def get_pass_rank_list(self):
         return self.pass_rank_list        
