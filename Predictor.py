@@ -15,6 +15,9 @@ analysis.analyse(dataframe)
 
 # ダミー変数化
 pretreatment = Pretreatment.Pretreatment()
+pass_rank_df = pretreatment.get_one_hot_vector(dataframe, data.pass_rank)
+print(occupation_df)
+
 pretreatment.fill_none_with_blank(dataframe, data.occupation, "")
 occupation_df = pretreatment.get_one_hot_vector(dataframe, data.occupation)
 print(occupation_df)

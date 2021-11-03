@@ -7,7 +7,7 @@ class Data:
     job_list = "job_list"
     offer_id = "offer_id"
     company_name = "company_name"
-    path_rank = "path_rank"
+    pass_rank = "pass_rank"
     occupation = "occupation"
     salary_min = "salary_min"
     salary_max = "salary_max"
@@ -23,7 +23,7 @@ class Data:
 
     def truncate(self):
         self.db.truncate(self.job_list)
-        self.db.truncate(self.path_rank)
+        self.db.truncate(self.pass_rank)
         self.db.truncate(self.occupation)
         self.db.truncate(self.salary_min)
         self.db.truncate(self.salary_max)
@@ -35,7 +35,7 @@ class Data:
         self.insert_company_name(parser.get_offer_id_list(),
                                  parser.get_company_name_list())
         self.insert_rank(parser.get_offer_id_list(),
-                         parser.get_path_rank_list())
+                         parser.get_pass_rank_list())
         self.insert_occupation(parser.get_offer_id_list(),
                                parser.get_occupation_list())
         self.insert_salary_min(parser.get_offer_id_list(),
@@ -54,7 +54,7 @@ class Data:
                        offer_id_list, company_name_list)
 
     def insert_rank(self, offer_id_list, rank_list):
-        self.db.insert(self.path_rank, self.path_rank,
+        self.db.insert(self.pass_rank, self.pass_rank,
                        offer_id_list, rank_list)
 
     def insert_occupation(self, offer_id_list, occupation_list):
@@ -84,7 +84,7 @@ class Data:
     def combine(self):
         sql = "SELECT \
             job_list.*, \
-            path_rank.path_rank, \
+            pass_rank.pass_rank, \
             occupation.occupation, \
             salary_min.salary_min, \
             salary_max.salary_max, \
@@ -94,9 +94,9 @@ class Data:
         FROM \
             job_list \
         LEFT JOIN \
-            path_rank \
+            pass_rank \
         ON \
-            job_list.offer_id = path_rank.offer_id \
+            job_list.offer_id = pass_rank.offer_id \
         LEFT JOIN \
             occupation \
         ON \
