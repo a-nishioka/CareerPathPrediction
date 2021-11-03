@@ -122,21 +122,23 @@ class Parser:
             pos_occupation = self.token.get_part_of_speech(part_of_speech_list, occupation)
             reunion = []
             for each in pos_occupation:
-                removed_punctuation = self.so.remove_punctuation(each)
-                removed_prefecture = self.so.remove_prefecture(removed_punctuation)
-                removed_region = self.so.remove_region(removed_prefecture)
-                removed_city = self.so.remove_city(removed_region)
-                removed_language = self.so.remove_language(removed_city)
-                removed_framework = self.so.remove_framework(removed_language)
-                removed_stop_word = self.so.remove_stop_word(removed_framework)
-                if(removed_stop_word != ""):
-                    self.f.write(str(removed_stop_word.upper() + "\n"))
-                    reunion.append(removed_stop_word.upper())
+                occupation = self.so.remove_punctuation(each)
+                occupation = self.so.remove_prefecture(occupation)
+                occupation = self.so.remove_region(occupation)
+                occupation = self.so.remove_city(occupation)
+                occupation = self.so.remove_language(occupation)
+                occupation = self.so.remove_framework(occupation)
+                occupation = self.so.remove_position(occupation)
+                occupation = self.so.remove_hiragana(occupation)
+                occupation = self.so.remove_stop_word(occupation)
+                if(occupation != ""):
+                    occupation = occupation.upper()
+                    self.f.write(str(occupation + "\n"))
+                    reunion.append(occupation)
         result = ''.join(reunion)
         if(result is None):
             self.occupation_list.append("")
         else:
-            result = self.so.remove_hiragana(result)
             self.occupation_list.append(result)
             
 

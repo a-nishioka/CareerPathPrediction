@@ -1,14 +1,17 @@
 import numpy as np
 import pandas as pd
-from pandas.core.construction import array
+import StringOperation
 
 
 class Pretreatment:
+    so = StringOperation.StringOperation()
 
     def __init__(self):
+        self.so = StringOperation.StringOperation()
         return
 
     def __del__(self):
+        del self.so
         return
 
     def fill_none_with_blank(self, dataframe, column_name, text):
@@ -19,7 +22,7 @@ class Pretreatment:
 
     def get_one_hot_vector(self, dataset, column_name):
         element_list = self.get_element_list(dataset, column_name)
-        unique_list = self.get_unique_list(element_list)
+        unique_list = self.so.get_unique_list(element_list)
         for each in unique_list:
             print(each)
         frame_dummy = self.get_dummy_mat(dataset, unique_list, column_name)
@@ -32,9 +35,6 @@ class Pretreatment:
         element_list = str(all_element_list).split(",")
         all_element_list = [element.strip() for element in element_list]
         return all_element_list
-
-    def get_unique_list(self, text_array):
-        return list(set(text_array))
 
     def get_dummy_mat(self, dataset, unique_list, col_name):
         dummy_mat = np.zeros((dataset.shape[0],  len(unique_list)))
@@ -49,7 +49,10 @@ class Pretreatment:
         return dummy_mat
 
     def merge_dummies(self, dataframe, occupation_df, environment_df, framework_df):
-        merged_df = pd.merge(dataframe, occupation_df, left_index=True, right_index=True)
-        merged_df = pd.merge(merged_df, environment_df, left_index=True, right_index=True)
-        merged_df = pd.merge(merged_df, framework_df, left_index=True, right_index=True)
+        merged_df = pd.merge(dataframe, occupation_df,
+                             left_index=True, right_index=True)
+        merged_df = pd.merge(merged_df, environment_df,
+                             left_index=True, right_index=True)
+        merged_df = pd.merge(merged_df, framework_df,
+                             left_index=True, right_index=True)
         return merged_df

@@ -24,7 +24,7 @@ next_page = parser.next()
 
 while True:
     if next_page != "":
-        time.sleep(3)
+        time.sleep(1)
         html = crawler.crawl(base_url + next_page)
         parser.parse(html.text)
         data.insert(parser)
