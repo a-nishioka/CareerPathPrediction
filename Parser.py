@@ -99,6 +99,7 @@ class Parser:
         return self.offer_id_list
 
     def get_company_name(self):
+        self.company_name_list = []
         for each in self.parse_tree.find_all("h4", class_="c-job_offer-recruiter__name"):
             company_name = each.find("a").text.strip()
             self.company_name_list.append(company_name)
@@ -107,18 +108,17 @@ class Parser:
         return self.company_name_list
 
     def get_pass_rank(self):
+        self.pass_rank_list = []
         for each in self.parse_tree.find_all("div", class_="c-job_offer-box__header-rank-wrap"):
             pass_rank = each.find("span").text.strip()
             pass_rank = self.so.get_forward("：", pass_rank)
-            if(pass_rank == ""):
-                self.pass_rank_list.append("")
-            else:
-                self.pass_rank_list.append(str(pass_rank))
+            self.pass_rank_list.append(str(pass_rank))
 
     def get_pass_rank_list(self):
         return self.pass_rank_list        
 
     def get_occupation(self):
+        self.occupation_list = []
         for each in self.parse_tree.find_all("div", class_="c-job_offer-detail__occupation"):
             occupation = each.text.strip()
             part_of_speech_list = ["名詞"]
@@ -149,6 +149,7 @@ class Parser:
         return self.occupation_list
 
     def get_salary_min(self):
+        self.salary_min_list = []
         for each in self.parse_tree.find_all("strong", class_="c-job_offer-detail__salary"):
             min = ""
             min = self.so.get_back("万 〜", each.text)
@@ -165,6 +166,7 @@ class Parser:
         return self.salary_min_list
 
     def get_salary_max(self):
+        self.salary_max_list = []
         for each in self.parse_tree.find_all("strong", class_="c-job_offer-detail__salary"):
             max = ""
             forward = self.so.get_forward("〜 ", each.text)
@@ -179,6 +181,7 @@ class Parser:
         return self.salary_max_list
 
     def get_location(self):
+        self.location_list = []
         keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
         values = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
         for key, value in zip(keys, values):
@@ -193,6 +196,7 @@ class Parser:
         return self.location_list
 
     def get_environment(self):
+        self.environment_list = []
         keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
         values = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
         for key, value in zip(keys, values):
@@ -206,6 +210,7 @@ class Parser:
         return self.environment_list
 
     def get_framework(self):
+        self.framework_list = []
         keys = self.parse_tree.find_all("span", class_="c-job_offer-detail__term-text")
         values = self.parse_tree.find_all("td", class_="c-job_offer-detail__description")
         for key, value in zip(keys, values):

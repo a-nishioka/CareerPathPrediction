@@ -21,13 +21,13 @@ print(pass_rank_df)
 
 pretreatment.fill_none_with_blank(dataframe, data.occupation, "")
 occupation_df = pretreatment.get_one_hot_vector(dataframe, data.occupation)
-print(occupation_df)
+#print(occupation_df)
 
 enviroment_df = pretreatment.get_one_hot_vector(dataframe, data.environment)
-print(enviroment_df)
+#print(enviroment_df)
 
 framework_df = pretreatment.get_one_hot_vector(dataframe, data.framework)
-print(framework_df)
+#print(framework_df)
 
 merged_df = pretreatment.merge_dummies(dataframe, pass_rank_df, occupation_df, enviroment_df, framework_df)
 data.output_csv(merged_df)

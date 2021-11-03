@@ -30,8 +30,6 @@ class Pretreatment:
         return data_frame
 
     def get_element_list(self, dataset, column_name):
-        for each in dataset[column_name]:
-            print(each)
         all_element_list = ",".join(dataset[column_name])
         element_list = str(all_element_list).split(",")
         all_element_list = [element.strip() for element in element_list]
@@ -52,7 +50,7 @@ class Pretreatment:
     def merge_dummies(self, dataframe, pass_rank_df, occupation_df, environment_df, framework_df):
         merged_df = pd.merge(dataframe, pass_rank_df,
                              left_index=True, right_index=True)
-        merged_df = pd.merge(dataframe, occupation_df,
+        merged_df = pd.merge(merged_df, occupation_df,
                              left_index=True, right_index=True)
         merged_df = pd.merge(merged_df, environment_df,
                              left_index=True, right_index=True)
