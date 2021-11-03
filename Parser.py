@@ -12,6 +12,7 @@ class Parser:
     token = Token.Token()
     offer_id_list = []
     company_name_list = []
+    path_rank_list = []
     occupation_list = []
     salary_min_list = []
     salary_max_list = []
@@ -29,6 +30,7 @@ class Parser:
         self.token = Token.Token()
         self.offer_id_list = []
         self.company_name_list = []
+        self.path_rank_list = []
         self.occupation_list = []
         self.salary_min_list = []
         self.salary_max_list = []    
@@ -46,6 +48,7 @@ class Parser:
         del self.token
         del self.offer_id_list
         del self.company_name_list
+        del self.path_rank_list
         del self.occupation_list
         del self.salary_min_list
         del self.salary_max_list
@@ -62,6 +65,7 @@ class Parser:
             self.get_last_page_num()
         self.get_offer_id()
         self.get_company_name()
+        self.get_path_rank()
         self.get_occupation()
         self.get_salary_min()
         self.get_salary_max()
@@ -101,6 +105,15 @@ class Parser:
 
     def get_company_name_list(self):
         return self.company_name_list
+
+    def get_path_rank(self):
+        for each in self.parse_tree.find_all("div", class_="c-job_offer-box__header-rank-wrap"):
+            path_rank = each.find("span").text.strip()
+            path_rank = self.so.get_forward("：", path_rank)
+            self.path_rank_list.append(path_rank)
+
+    def get_path_rank_list(self):
+        return self.path_rank_list        
 
     def get_occupation(self):
         for each in self.parse_tree.find_all("div", class_="c-job_offer-detail__occupation"):
