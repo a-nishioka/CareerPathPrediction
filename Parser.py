@@ -157,9 +157,9 @@ class Parser:
                 min = self.so.get_back("万円 〜", each.text)
             if(min == ""):
                 min = self.so.get_back("万円", each.text)
-            if(min == ""):
-                min = "0"
             min = self.so.replace(",", "", str(min)).strip()
+            if(min == ""):
+                min = 0
             self.salary_min_list.append(int(min))
 
     def get_salary_min_list(self):
@@ -169,12 +169,12 @@ class Parser:
         self.salary_max_list = []
         for each in self.parse_tree.find_all("strong", class_="c-job_offer-detail__salary"):
             max = ""
-            forward = self.so.get_forward("〜 ", each.text)
-            if(forward != ""):
-                max = self.so.get_back("万円", forward)
-            if (max == ""):
-                max = "0"
+            max = self.so.get_forward("〜 ", each.text)
+            if(max != ""):
+                max = self.so.get_back("万円", max)
             max = self.so.replace(",", "", str(max)).strip()
+            if(max == ""):
+                max = 0
             self.salary_max_list.append(int(max))
 
     def get_salary_max_list(self):
