@@ -17,6 +17,7 @@ analysis.analyse(dataframe)
 
 
 pretreatment = Pretreatment.Pretreatment()
+pretreatment.fill_zeros(dataframe, data.salary_min, dataframe[data.salary_min].median())
 pretreatment.fill_zeros(dataframe, data.salary_max, dataframe[data.salary_max].median())
 pretreatment.fill_none(dataframe, data.pass_rank, "")
 pretreatment.fill_none(dataframe, data.occupation, "")
