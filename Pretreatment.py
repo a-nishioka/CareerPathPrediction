@@ -14,7 +14,11 @@ class Pretreatment:
         del self.so
         return
 
-    def fill_none_with_blank(self, dataframe, column_name, text):
+    def fill_zeros(self, dataframe, column_name, value):
+        dataframe[column_name].replace(0, value)
+
+
+    def fill_none(self, dataframe, column_name, text):
         for i in range(len(dataframe[column_name])):
             if(dataframe[column_name][i] is None):
                 s = None

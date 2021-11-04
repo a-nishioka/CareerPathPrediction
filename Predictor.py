@@ -13,13 +13,18 @@ analysis.analyse(dataframe)
 #analysis.hist(dataset, data.salary_min)
 #analysis.hist(dataset, data.salary_max)
 
-# ダミー変数化
+# 前処理
+
+
 pretreatment = Pretreatment.Pretreatment()
-pretreatment.fill_none_with_blank(dataframe, data.pass_rank, "")
+pretreatment.fill_zeros(dataframe, data.salary_max, dataframe[data.salary_max].median())
+pretreatment.fill_none(dataframe, data.pass_rank, "")
+pretreatment.fill_none(dataframe, data.occupation, "")
+
+# ダミー変数化
 pass_rank_df = pretreatment.get_one_hot_vector(dataframe, data.pass_rank)
 print(pass_rank_df)
 
-pretreatment.fill_none_with_blank(dataframe, data.occupation, "")
 occupation_df = pretreatment.get_one_hot_vector(dataframe, data.occupation)
 #print(occupation_df)
 
