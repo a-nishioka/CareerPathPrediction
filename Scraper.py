@@ -14,7 +14,7 @@ data.truncate()
 
 base_url = "https://paiza.jp"
 html = crawler.crawl("https://paiza.jp/career/job_offers")
-file.write_html(html.text)
+#file.write_html(html.text)
 
 # データパース
 parser.parse(html.text)
@@ -26,7 +26,7 @@ while True:
     if next_page != "":
         time.sleep(1)
         html = crawler.crawl(base_url + next_page)
-        file.write_html(html.text)
+        #file.write_html(html.text)
         parser.parse(html.text)
         data.insert(parser)
         print("[", datetime.datetime.now().isoformat(), "]", "Progress:", "{:3d} / {:3d}".format(parser.get_next_page(), parser.get_last_page()))
