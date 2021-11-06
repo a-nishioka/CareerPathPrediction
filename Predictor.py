@@ -1,7 +1,8 @@
-from numpy import dtype
+from numpy import dtype, mod
 import Data
 import Analysis
 import Pretreatment
+import Model
 
 data = Data.Data()
 analysis = Analysis.Analysis()
@@ -36,9 +37,18 @@ enviroment_df = pretreatment.get_one_hot_vector(dataframe, data.environment)
 framework_df = pretreatment.get_one_hot_vector(dataframe, data.framework)
 #print(framework_df)
 
-merged_df = pretreatment.merge_dummies(dataframe, pass_rank_df, occupation_df, enviroment_df, framework_df)
-data.output_csv(merged_df)
+dataframe = pretreatment.merge_dummies(dataframe, pass_rank_df, occupation_df, enviroment_df, framework_df)
+data.output_csv(dataframe)
+
+# 年収予測
+model = Model.Model()
+
+# ターゲット変数と特徴量を作成する
+target_col = data.salary_min
+exclude_cols = [data.salary_min, data.salary_max, data.offer_id, data.company_name, data.pass_rank, data.occupation, data.location, data.environment, data.framework]
+model.supervised_learn(dataframe, target_col, exclude_cols)
 
 del data
 del analysis
 del pretreatment
+del model
