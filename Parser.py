@@ -138,8 +138,10 @@ class Parser:
                 if(occupation != ""):
                     self.f.write(str(occupation + "\n"))
                     reunion.append(occupation)
+            sorted(set(reunion), key=reunion.index)
+            result = ""
             result = ''.join(reunion)
-            if(result is None):
+            if(result == ""):
                 self.occupation_list.append("")
             else:
                 self.occupation_list.append(result)
