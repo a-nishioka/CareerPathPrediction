@@ -57,7 +57,7 @@ class StringOperation:
     def remove_punctuation(self, text):
         text = unicodedata.normalize("NFKC", text)
         result = text.translate(str.maketrans(
-            '', '', string.punctuation + "「」、。','"))
+            '', '', string.punctuation + "「」、。','・"))
         return result
 
     def remove_hiragana(self, text):
