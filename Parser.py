@@ -111,7 +111,6 @@ class Parser:
         self.pass_rank_list = []
         for each in self.parse_tree.find_all("div", class_="c-job_offer-box__header-rank-wrap"):
             pass_rank = each.find("span").text.strip()
-            pass_rank = self.so.get_forward("：", pass_rank)
             self.pass_rank_list.append(str(pass_rank))
 
     def get_pass_rank_list(self):
@@ -142,7 +141,7 @@ class Parser:
             result = ""
             result = ''.join(reunion)
             if(result == ""):
-                self.occupation_list.append("")
+                self.occupation_list.append("エンジニア")
             else:
                 self.occupation_list.append(result)
             
